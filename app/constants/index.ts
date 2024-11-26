@@ -42,40 +42,40 @@ export const IdentificationTypes = [
 
 export const Doctors = [
   {
-    image: "/assets/images/elon-musk.png",
+    image: "/assets/images/dr-green.png",
     name: "Elon Musk",
   },
   {
-    image: "/assets/images/steve-jobs.png",
-    name: "Steve Jobs",
-  },
-  {
-    image: "/assets/images/linus-torvalds.png",
-    name: "Linus Torvalds",
-  },
-  {
-    image: "/assets/images/barack-obama.png",
-    name: "Barack Obama",
-  },
-  {
-    image: "/assets/images/bill-gates.png",
-    name: "Bill Gates",
-  },
-  {
-    image: "/assets/images/mark-zuckerberg.png",
+    image: "/assets/images/dr-cameron.png",
     name: "Mark Zuckerberg",
   },
   {
-    image: "/assets/images/jeff-bezos.png",
+    image: "/assets/images/dr-livingston.png",
+    name: "Bill Gates",
+  },
+  {
+    image: "/assets/images/dr-peter.png",
     name: "Jeff Bezos",
   },
   {
-    image: "/assets/images/sundar-pichai.png",
-    name: "Sundar Pichai",
+    image: "/assets/images/dr-powell.png",
+    name: "Larry Page",
   },
   {
-    image: "/assets/images/tim-cook.png",
+    image: "/assets/images/dr-remirez.png",
+    name: "Sergey Brin",
+  },
+  {
+    image: "/assets/images/dr-lee.png",
     name: "Tim Cook",
+  },
+  {
+    image: "/assets/images/dr-cruz.png",
+    name: "Satya Nadella",
+  },
+  {
+    image: "/assets/images/dr-sharma.png",
+    name: "Sundar Pichai",
   },
 ];
 
