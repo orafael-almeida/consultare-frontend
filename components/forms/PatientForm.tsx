@@ -1,14 +1,14 @@
 "use client";
 
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useRouter} from "next/navigation";
-import {useState} from "react";
-import {useForm} from "react-hook-form";
-import {z} from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import {Form} from "@/components/ui/form";
-import {createUser} from "@/lib/actions/patient.actions";
-import {UserFormValidation} from "@/lib/validation";
+import { Form } from "@/components/ui/form";
+import { createUser } from "@/lib/actions/patient.actions";
+import { UserFormValidation } from "@/lib/validation";
 
 import CustomFormField from "@/components/CustomFormField";
 import SubmitButton from "../SubmitButton";
@@ -36,15 +36,19 @@ const PatientForm = () => {
     },
   });
 
-  async function onSubmit({ name, email, phone, }: z.infer<typeof UserFormValidation>) {
+  async function onSubmit({
+    name,
+    email,
+    phone,
+  }: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
 
     try {
-      const userData = {name, email, phone};
+      const userData = { name, email, phone };
 
       const user = await createUser(userData);
-       
-      if (user) router.push(`/patiens/${user.id}/register`);
+
+      if (user) router.push(`/patiens/${user.$id}/register`);
     } catch (error) {
       console.error(error);
     }
