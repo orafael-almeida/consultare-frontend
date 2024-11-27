@@ -38,7 +38,7 @@ const AppointmentModal = ({
       <DialogContent className="shad-dialog sm:max-w-md">
         <DialogHeader className="mb-4 space-y-3">
           <DialogTitle className="">
-            {type === "schedule" ? "Agendar" : "Cancelar"} o agendamento
+            {type === "schedule" ? "Confirmar" : "Cancelar"} o agendamento
           </DialogTitle>
           <DialogDescription>
             Preencha os seguintes detalhes para {type.toLowerCase()} o
