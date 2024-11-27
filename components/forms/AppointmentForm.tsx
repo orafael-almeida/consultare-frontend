@@ -15,34 +15,42 @@ import { Doctors } from "@/app/constants";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import { getAppointmentSchema } from "@/lib/validation";
-import { createAppointment } from "@/lib/actions/appointment.actions";
+import {
+  createAppointment,
+  updateAppointment,
+} from "@/lib/actions/appointment.actions";
+import { Appointment } from "@/types/appwrite.types";
 
 const AppointmentForm = ({
   userId,
   patientId,
   type,
+  appointment,
+  setOpen,
 }: {
   userId: string;
   patientId: string;
   type: "create" | "cancel" | "schedule";
+  appointment?: Appointment;
+  setOpen: (open: boolean) => void;
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const AppointmentFormValidation = getAppointmentSchema(type);
-
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
-      primaryPhysician: "",
-      schedule: new Date(),
-      reason: "",
-      note: "",
-      cancellationReason: "",
+      primaryPhysician: appointment ? appointment.primaryPhysician : "",
+      schedule: appointment ? new Date(appointment.schedule) : new Date(),
+      reason: appointment ? appointment.reason : "",
+      note: appointment ? appointment.note : "",
+      cancelationReason: appointment?.cancelationReason || "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof AppointmentFormValidation>) {
+    console.log("SUBMITING >>>>>", { type });
     setIsLoading(true);
 
     let status;
@@ -57,7 +65,7 @@ const AppointmentForm = ({
         status = "pending";
         break;
     }
-
+    console.log({ type });
     try {
       if (type === "create" && patientId) {
         const appointmentData = {
@@ -71,15 +79,33 @@ const AppointmentForm = ({
         };
 
         const appointment = await createAppointment(appointmentData);
-        console.log(appointment);
         if (appointment) {
           form.reset();
           router.push(
             `/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
           );
         }
+      } else {
+        const appointmentToUpdate = {
+          userId,
+          appointmentId: appointment?.$id!,
+          appointment: {
+            primaryPhysician: values?.primaryPhysician,
+            schedule: new Date(values?.schedule),
+            status: status as Status,
+            cancelationReason: values?.cancelationReason,
+          },
+          type,
+        };
+        const updatedAppointment = await updateAppointment(appointmentToUpdate);
+
+        if (updatedAppointment) {
+          if (setOpen) {
+            setOpen(false);
+          }
+          form.reset();
+        }
       }
-      console.log("DEPOIS DO TYPE", type);
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +113,6 @@ const AppointmentForm = ({
   }
 
   let buttonLabel;
-
   switch (type) {
     case "cancel":
       buttonLabel = "Cancelar Consulta";
@@ -103,12 +128,14 @@ const AppointmentForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
-        <section className="mb-12 space-y-4">
-          <h1 className="header">Nova Consulta</h1>
-          <p className="text-dark-700">
-            Agente uma nova consulta em 10 segundos
-          </p>
-        </section>
+        {type === "create" && (
+          <section className="mb-12 space-y-4">
+            <h1 className="header">Nova Consulta</h1>
+            <p className="text-dark-700">
+              Agente uma nova consulta em 10 segundos
+            </p>
+          </section>
+        )}
 
         {type !== "cancel" && (
           <>
@@ -149,7 +176,7 @@ const AppointmentForm = ({
                 control={form.control}
                 name="reason"
                 label="Motivo da consulta"
-                placeholder="Informações sobre a consulta"
+                placeholder="Motivo da consulta"
               />
               <CustomFormField
                 fieldType={FormFieldType.TEXTAREA}
@@ -166,7 +193,7 @@ const AppointmentForm = ({
           <CustomFormField
             fieldType={FormFieldType.TEXTAREA}
             control={form.control}
-            name="cancellationReason"
+            name="cancelationReason"
             label="Motivo do cancelamento"
             placeholder="Informações sobre o cancelamento"
           />
