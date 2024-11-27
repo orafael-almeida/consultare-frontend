@@ -96,7 +96,7 @@ export const CreateAppointmentSchema = z.object({
     .min(2, "O motivo deve conter pelo menos 2 caracteres")
     .max(500, "O motivo deve conter no máximo 500 caracteres"),
   note: z.string().optional(),
-  cancellationReason: z.string().optional(),
+  cancelationReason: z.string().optional(),
 });
 
 export const ScheduleAppointmentSchema = z.object({
@@ -104,7 +104,7 @@ export const ScheduleAppointmentSchema = z.object({
   schedule: z.coerce.date(),
   reason: z.string().optional(),
   note: z.string().optional(),
-  cancellationReason: z.string().optional(),
+  cancelationReason: z.string().optional(),
 });
 
 export const CancelAppointmentSchema = z.object({
@@ -112,7 +112,7 @@ export const CancelAppointmentSchema = z.object({
   schedule: z.coerce.date(),
   reason: z.string().optional(),
   note: z.string().optional(),
-  cancellationReason: z
+  cancelationReason: z
     .string()
     .min(2, "O motivo deve conter pelo menos 2 caracteres")
     .max(500, "O motivo deve conter no máximo 500 caracteres"),
