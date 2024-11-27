@@ -14,7 +14,7 @@ export default async function NewAppointment({
             src="/assets/icons/logo-full.svg"
             height={1000}
             width={1000}
-            alt="PAtient"
+            alt="Patient"
             className="mb-12 h-10 w-fit"
           />
 
