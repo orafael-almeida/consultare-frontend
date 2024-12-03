@@ -1,9 +1,8 @@
 
 <div align="center">
   <br />
-    <a href="#" target="_blank">
-      <img src="https://raw.githubusercontent.com/orafael-almeida/consultare-system-frontend/refs/heads/main/public/assets/images/consultare-readme.png
-      " alt="Project Banner">
+    <a href="https://github.com/orafael-almeida" target="_blank">
+      <img src="https://github.com/orafael-almeida/consultare-system-frontend/blob/main/public/assets/images/consultare-readme.png?raw=true" alt="Project Banner">
     </a>
   <br />
 
