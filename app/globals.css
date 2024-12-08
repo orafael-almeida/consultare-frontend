@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  color: #abb8c4;
+}
+
 /* ========================================== TAILWIND STYLES */
 @layer base {
   /* Remove scrollbar */
